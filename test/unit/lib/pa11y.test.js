@@ -86,6 +86,60 @@ describe('lib/pa11y', () => {
 		assert.isFunction(pa11y);
 	});
 
+	describe('pa11y', () => {
+		beforeEach(() => {
+			puppeteer.launch.resetHistory();
+			puppeteer.mockBrowser.newPage.resetHistory();
+			puppeteer.mockBrowser.close.resetHistory();
+			puppeteer.mockPage.close.resetHistory();
+			puppeteer.mockPage.goto.resetHistory();
+		});
+
+		it('throws error when called without a url and `defaults.ignoreUrl` is not defined', async () => {
+			let pa11yError;
+
+			pa11y.defaults = extend({}, pa11y.defaults, {
+				browser: puppeteer.mockBrowser,
+				page: puppeteer.mockPage
+			});
+
+			try {
+				await pa11y();
+			} catch (error) {
+				pa11yError = error;
+			}
+
+			assert.instanceOf(pa11yError, Error);
+			assert.strictEqual(pa11yError.message, 'A url must be defined via the `url` parameter or `options.url`, or `options.ignoreUrl` must be set to true.');
+		});
+
+		it('does not call page.goto when `defaults.ignoreUrl` is set to true', async () => {
+			const page = puppeteer.mockPage;
+
+			pa11y.defaults = extend({}, pa11y.defaults, {
+				browser: puppeteer.mockBrowser,
+				page: puppeteer.mockPage,
+				ignoreUrl: true
+			});
+
+			await pa11y();
+
+			assert.notCalled(page.goto);
+		});
+
+		it('does not call page.goto when `options.ignoreUrl` is set to true', async () => {
+			const page = puppeteer.mockPage;
+
+			await pa11y({
+				browser: puppeteer.mockBrowser,
+				page: puppeteer.mockPage,
+				ignoreUrl: true
+			});
+
+			assert.notCalled(page.goto);
+		});
+	});
+
 	describe('pa11y(url)', () => {
 		let resolvedValue;
 
@@ -1019,6 +1073,10 @@ describe('lib/pa11y', () => {
 
 		it('has a `method` property', () => {
 			assert.deepEqual(pa11y.defaults.method, 'GET');
+		});
+
+		it('has a `page` property', () => {
+			assert.isNull(pa11y.defaults.page);
 		});
 
 		it('has a `postData` property', () => {
