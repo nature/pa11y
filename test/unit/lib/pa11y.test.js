@@ -907,6 +907,21 @@ describe('lib/pa11y', () => {
 			});
 		});
 
+		it('produces a helpful message if runner is not found`', async () => {
+			options = {
+				mockOptions: true,
+				runners: ['potato']
+			};
+			let runnerError;
+			try {
+				await pa11y('https://mock-url/', options);
+			} catch (error) {
+				runnerError = error;
+			}
+			assert.strictEqual(runnerError.message, 'Runner module not found: potato');
+		});
+
+
 	});
 
 	describe('pa11y(url, callback)', () => {
@@ -1060,6 +1075,26 @@ describe('lib/pa11y', () => {
 			assert.strictEqual(pa11y.defaults.wait, 0);
 		});
 
+	});
+
+	describe('.requireFirst', () => {
+		// Note: 'fs' has been registered with `mockery`
+		it('returns the first file when a match is found', () => {
+			const result = pa11y.requireFirst(['fs']);
+			assert.isDefined(result.readFile);
+		});
+		it('returns the first file found if beyond the first in the list', () => {
+			const result = pa11y.requireFirst(['potato', 'fs']);
+			assert.isDefined(result.readFile);
+		});
+		it('returns the default if entire stack is not found', () => {
+			const result = pa11y.requireFirst(['potato'], {defaultValue: true});
+			assert(result.defaultValue);
+		});
+		it('returns the default if the require-stack is empty', () => {
+			const result = pa11y.requireFirst([], {defaultValue: true});
+			assert(result.defaultValue);
+		});
 	});
 
 });

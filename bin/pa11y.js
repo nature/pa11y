@@ -180,7 +180,7 @@ function processOptions() {
  * @returns {Object} A config object
  */
 function loadConfig(filePath) {
-	return requireFirst([
+	return pa11y.requireFirst([
 		filePath,
 		filePath.replace(/^\.\//, `${process.cwd()}/`),
 		`${process.cwd()}/${filePath}`
@@ -196,7 +196,7 @@ function loadReporter(name) {
 	let reporterMethods;
 
 	try {
-		reporterMethods = requireFirst([
+		reporterMethods = pa11y.requireFirst([
 			`pa11y-reporter-${name}`,
 			path.join(process.cwd(), name)
 		], null);
@@ -235,26 +235,6 @@ function checkReporterCompatibility(reporterName, reporterSupportString, pa11yVe
 		console.error(`Reporter Support: ${reporterSupportString}`);
 		console.error(`Pa11y Version:    ${pa11yVersion}`);
 		process.exit(1);
-	}
-}
-
-/**
- * Traverses a number of directories trying to load a config file from them
- * @param {String[]} stack - A list of directories
- * @param {Object} defaultReturn - The object to return if no config is found
- * @returns {Object} A config object
- */
-function requireFirst(stack, defaultReturn) {
-	if (!stack.length) {
-		return defaultReturn;
-	}
-	try {
-		return require(stack.shift());
-	} catch (error) {
-		if (error.code === 'MODULE_NOT_FOUND') {
-			return requireFirst(stack, defaultReturn);
-		}
-		throw error;
 	}
 }
 
