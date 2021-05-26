@@ -7,7 +7,7 @@ Pa11y is your automated accessibility testing pal. It runs accessibility tests o
 [![NPM version][shield-npm]][info-npm]
 [![Node.js version support][shield-node]][info-node]
 [![Build status][shield-build]][info-build]
-[![LGPL-3.0 licensed][shield-license]][info-license]
+[![LGPL-3.0-only licensed][shield-license]][info-license]
 
 On the command line:
 
@@ -1000,7 +1000,7 @@ If you're opening issues related to these, please mention the version that the i
 License
 -------
 
-Pa11y is licensed under the [Lesser General Public License (LGPL-3.0)][info-license].<br/>
+Pa11y is licensed under the [Lesser General Public License (LGPL-3.0-only)][info-license].<br/>
 Copyright &copy; 2013–2019, Team Pa11y and contributors
 
 [1.0-json-reporter]: https://github.com/pa11y/reporter-1.0-json
@@ -1026,7 +1026,7 @@ Copyright &copy; 2013–2019, Team Pa11y and contributors
 [info-node]: package.json
 [info-npm]: https://www.npmjs.com/package/pa11y
 [info-build]: https://travis-ci.org/pa11y/pa11y
-[shield-license]: https://img.shields.io/badge/license-LGPL%203.0-blue.svg
+[shield-license]: https://img.shields.io/badge/license-LGPL--3.0--only-blue.svg
 [shield-node]: https://img.shields.io/node/v/pa11y.svg
 [shield-npm]: https://img.shields.io/npm/v/pa11y.svg
 [shield-build]: https://img.shields.io/travis/pa11y/pa11y/master.svg

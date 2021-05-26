@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/pa11y/pa11y",
   "bugs": "https://github.com/pa11y/pa11y/issues",
-  "license": "LGPL-3.0",
+  "license": "LGPL-3.0-only",
   "engines": {
     "node": ">=8"
   },
